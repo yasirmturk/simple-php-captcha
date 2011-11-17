@@ -1,0 +1,54 @@
+A simple PHP CAPTCHA script
+
+	Copyright 2011 by Cory LaViska for A Beautiful Site, LLC.
+
+	Website: http://abeautifulsite.net/blog/2011/01/a-simple-php-captcha-script/
+
+	Dual-licensed under the MIT License and the GNU GPL. Please choose the 
+	license that best suits your needs. This software is free of charge and 
+	may be used for both personal and commercial applications.
+
+	MIT License: http:en.wikipedia.org/wiki/MIT_License
+
+	GNU GPL: http:en.wikipedia.org/wiki/GNU_General_Public_License
+
+
+Dependencies:
+
+	- Requires PHP GD library
+	- Background images must be in PNG format
+	- Fonts can be either TTF or OTF format
+	- Uses the $_SESSION['_CAPTCHA'] namespace
+
+
+Usage:
+
+	$_SESSION['captcha'] = captcha( array(
+		'code' => '',
+		'min_length' => 5,
+		'max_length' => 5,
+		'png_backgrounds' => array('default.png', ...),
+		'fonts' => array('times_new_yorker.ttf', ...),
+		'characters' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+		'min_font_size' => 24,
+		'max_font_size' => 30,
+		'color' => '#000',
+		'angle_min' => 0,
+		'angle_max' => 15,
+		'shadow' => true,
+		'shadow_color' => '#CCC',
+		'shadow_offset_x' => -2,
+		'shadow_offset_y' => 2
+	));
+
+	Note: Everything is optional; the function may also be called without any arguments.
+
+
+The above usage will result in these values:
+
+	$_SESSION['captcha']['code'] = [CAPTCHA code]
+	$_SESSION['captcha']['image_src'] = [image src attribute]
+
+To display the CAPTCHA image:
+
+	<img src="$_SESSION['captcha']['image_src']" alt="CAPTCHA security code" />
