@@ -44,6 +44,11 @@ Usage:
 	Note: Everything is optional; the function may also be called without any arguments.
 
 
+Demo:
+
+	http://labs.abeautifulsite.dev/simple-php-captcha/
+
+
 The above usage will result in these values:
 
 	$_SESSION['captcha']['code'] = [CAPTCHA code]
