@@ -107,11 +107,14 @@ if( isset($_GET['_CAPTCHA']) ) {
 	$background = $captcha_config['png_backgrounds'][rand(0, count($captcha_config['png_backgrounds']) -1)];
 	list($bg_width, $bg_height, $bg_type, $bg_attr) = getimagesize($background);
 	
+	// Create captcha object
 	$captcha = imagecreatefrompng($background);
+    imagealphablending($captcha, true);
+    imagesavealpha($captcha , true);
 	
 	$color = hex2rgb($captcha_config['color']);
 	$color = imagecolorallocate($captcha, $color['r'], $color['g'], $color['b']);
-	
+        
 	// Determine text angle
 	$angle = rand( $captcha_config['angle_min'], $captcha_config['angle_max'] ) * (rand(0, 1) == 1 ? -1 : 1);
 	
