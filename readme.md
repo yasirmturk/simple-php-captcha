@@ -7,7 +7,7 @@ _Dual licensed under the MIT / GPLv2 licenses_
 
 ## Demo
 
-http://labs.abeautifulsite.dev/simple-php-captcha/
+http://labs.abeautifulsite.net/simple-php-captcha/
 
 
 ## Requirements
