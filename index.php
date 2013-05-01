@@ -24,89 +24,94 @@ $_SESSION['captcha'] = captcha();
         </style>
     </head>
     <body>
-        <h1>
-            CAPTCHA Example
-        </h1>
-        
-        <h2>Usage</h2>
-        
-        <p>
-        	The following code will prepare a CAPTCHA image and keep the code in a session
-        	variable for later use:
-        </p>
-        
-<pre>
-&lt;?php
+        <form name="contactform" method="post" action="<?php $_SERVER['contactform/PHP_SELF'];?>">
+<table width="450px">
+<tr>
+ <td valign="top">
+  <label for="first_name">First Name *</label>
+ </td>
+ <td valign="top">
+  <input  type="text" name="first_name" maxlength="50" size="30">
+ </td>
+</tr>
+<tr>
+ <td valign="top">
+  <label for="last_name">Last Name *</label>
+ </td>
+ <td valign="top">
+  <input  type="text" name="last_name" maxlength="50" size="30">
+ </td>
+</tr>
+<tr>
+ <td valign="top">
+  <label for="email">Email Address *</label>
+ </td>
+ <td valign="top">
+  <input  type="text" name="email" maxlength="80" size="30">
+ </td>
+</tr>
+<tr>
+ <td valign="top">
+  <label for="telephone">Telephone Number</label>
+ </td>
+ <td valign="top">
+  <input  type="text" name="telephone" maxlength="30" size="30">
+ </td>
+</tr>
+<tr>
+ <td valign="top">
+  <label for="comments">Comments *</label>
+ </td>
+ <td valign="top">
+  <textarea  name="comments" maxlength="1000" cols="25" rows="6"></textarea>
+ </td>
+</tr>
+<tr>
+<td style="width:150px">&nbsp;</td>
+	<td>&nbsp;</td>
+</tr>
+<!--<tr>
+<td style="width:150px"><strong>Security Code:</strong></td>
+	<td><img src="/captcha/captcha.php" id="captcha" /><br/>
 
-session_start();
-include("captcha.php");
-$_SESSION['captcha'] = captcha();
 
-?&gt;
-</pre>
-        
-        <p>
-        	Dump of <code>$_SESSION['captcha']</code>:
-        </p>
-        
-<pre>
-<?php
-print_r($_SESSION['captcha']);
-?>
-</pre>
-        
-        <p>
-        	To display the CAPTCHA image, create an HTML &lt;img&gt; using <code>$_SESSION['captcha']['image_src']</code> 
-        	as the <code>src</code> attribute:
-        </p>
-        
-        <p>
-        	<?php
-        	echo '<img src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA" />';
-        	
-        	?>
-        </p>
-        
-        <p>
-        	To verify the CAPTCHA value, just test against the <code>$_SESSION['captcha']['code']</code>. Use 
-        	<code>strtolower()</code> or <code>strtoupper()</code> to perform a case-insensitive match.
-        </p>
-        
-        <h2>Configuration</h2>
-        <p>Configuration is easy and all values are optional. To specify one or more options, do this:</p>
-        
-<pre>
-&lt;?php
+CHANGE TEXT LINK
+<a href="#" onclick="
+    document.getElementById('captcha').src='captcha.php?'+Math.random();
+    document.getElementById('captcha-form').focus();"
+    id="change-image">Not readable? Change text.</a><br/><br/>
 
-// Showing default values
-$_SESSION['captcha'] = captcha( array(
-	'min_length' => 5,
-	'max_length' => 5,
-	'png_backgrounds' => array('default.png', ...),
-	'fonts' => array('times_new_yorker.ttf', ...),
-	'characters' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-	'min_font_size' => 24,
-	'max_font_size' => 30,
-	'color' => '#000',
-	'angle_min' => 0,
-	'angle_max' => 15,
-	'shadow' => true,
-	'shadow_color' => '#CCC',
-	'shadow_offset_x' => -2,
-	'shadow_offset_y' => 2
-));
 
-&gt;
-</pre>
+
+
+<input type="text" name="captcha" id="captcha-form" autocomplete="off" /></td>
+</tr> -->
+<tr>
+	<td style="width:150px"><strong>Please enter: *</strong></td>
+	<td><?php
+         echo '<img src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA" />';
         
-        <h2>Notes</h2>
-        
-        <ul>
-        	<li>Make sure you call <code>session_start()</code> before calling the <code>captcha()</code> function</li>
-        	<li>Backgound images must be in PNG format</li>
-        	<li>Backgrounds and fonts must be specified using their full paths (tip: use $_SERVER['DOCUMENT_ROOT'] . [path-to-file] or a path relative to the script that is executing)</li>
-        	<li>Angles should not exceed approximately 15 degrees, as the text will sometimes appear outside of the viewable area</li>
-        </ul>
+         ?><br />
+
+		 <?php //if ($fehler["captcha"] != "") { echo $fehler["captcha"]; } ?><input type="text" name="securitycode" maxlength="150" style="width:260px" value="" size="20" /></td>
+
+</tr>
+
+<tr>
+	<td style="width:150px">&nbsp;</td>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td style="width:150px">&nbsp;</td>
+	<td style="font-size:11px">Advice: Fields with <span class="pflichtfeld">*</span> have to be filled.</td>
+</tr>
+<tr>
+ <td colspan="2" style="text-align:center">
+  <input type="submit" value="Submit">
+ </td>
+</tr>
+</table>
+</form>
         
     </body>
 </html>
