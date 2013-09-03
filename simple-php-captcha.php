@@ -2,34 +2,48 @@
 //
 //	A simple PHP CAPTCHA script
 //
-//	Copyright 2011 by Cory LaViska for A Beautiful Site, LLC.
+//	Copyright 2013 by Cory LaViska for A Beautiful Site, LLC.
 //
-//	http://abeautifulsite.net/blog/2011/01/a-simple-php-captcha-script/
+//	See readme.md for usage, demo, and licensing info
 //
-function captcha($config = array()) {
+function simple_php_captcha($config = array()) {
 	
 	// Check for GD library
 	if( !function_exists('gd_info') ) {
 		throw new Exception('Required GD library is missing');
 	}
 	
+	$bg_path = dirname(__FILE__) . '/backgrounds/';
+	$font_path = dirname(__FILE__) . '/fonts/';
+	
 	// Default values
 	$captcha_config = array(
 		'code' => '',
 		'min_length' => 5,
 		'max_length' => 5,
-		'png_backgrounds' => array(dirname(__FILE__) . '/default.png'),
-		'fonts' => array(dirname(__FILE__) . '/times_new_yorker.ttf'),
-		'characters' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-		'min_font_size' => 24,
-		'max_font_size' => 30,
-		'color' => '#000',
+		'backgrounds' => array(
+			$bg_path . '45-degree-fabric.png',
+			$bg_path . 'cloth-alike.png',
+			$bg_path . 'grey-sandbag.png',
+			$bg_path . 'kinda-jean.png',
+			$bg_path . 'polyester-lite.png',
+			$bg_path . 'stitched-wool.png',
+			$bg_path . 'white-carbon.png',
+			$bg_path . 'white-wave.png'
+		),
+		'fonts' => array(
+			$font_path . 'times_new_yorker.ttf'
+		),
+		'characters' => 'ABCDEFGHJKLMNPRSTUVWXYZabcdefghjkmnprstuvwxyz23456789',
+		'min_font_size' => 28,
+		'max_font_size' => 28,
+		'color' => '#666',
 		'angle_min' => 0,
-		'angle_max' => 15,
+		'angle_max' => 10,
 		'shadow' => true,
-		'shadow_color' => '#CCC',
-		'shadow_offset_x' => -2,
-		'shadow_offset_y' => 2
+		'shadow_color' => '#fff',
+		'shadow_offset_x' => -1,
+		'shadow_offset_y' => 1
 	);
 	
 	// Overwrite defaults with custom config values
@@ -57,7 +71,7 @@ function captcha($config = array()) {
 		}
 	}
 	
-	// Generate image src
+	// Generate HTML for image src
 	$image_src = substr(__FILE__, strlen($_SERVER['DOCUMENT_ROOT'])) . '?_CAPTCHA&amp;t=' . urlencode(microtime());
 	$image_src = '/' . ltrim(preg_replace('/\\\\/', '/', $image_src), '/');
 	
@@ -91,30 +105,28 @@ if( !function_exists('hex2rgb') ) {
 	}
 }
 
-
 // Draw the image
 if( isset($_GET['_CAPTCHA']) ) {
 	
 	session_start();
 	
 	$captcha_config = unserialize($_SESSION['_CAPTCHA']['config']);
+	if( !$captcha_config ) exit();
+	
 	unset($_SESSION['_CAPTCHA']);
 	
 	// Use milliseconds instead of seconds
 	srand(microtime() * 100);
 	
 	// Pick random background, get info, and start captcha
-	$background = $captcha_config['png_backgrounds'][rand(0, count($captcha_config['png_backgrounds']) -1)];
+	$background = $captcha_config['backgrounds'][rand(0, count($captcha_config['backgrounds']) -1)];
 	list($bg_width, $bg_height, $bg_type, $bg_attr) = getimagesize($background);
 	
-	// Create captcha object
 	$captcha = imagecreatefrompng($background);
-    imagealphablending($captcha, true);
-    imagesavealpha($captcha , true);
 	
 	$color = hex2rgb($captcha_config['color']);
 	$color = imagecolorallocate($captcha, $color['r'], $color['g'], $color['b']);
-        
+	
 	// Determine text angle
 	$angle = rand( $captcha_config['angle_min'], $captcha_config['angle_max'] ) * (rand(0, 1) == 1 ? -1 : 1);
 	
@@ -153,5 +165,3 @@ if( isset($_GET['_CAPTCHA']) ) {
 	imagepng($captcha);
 	
 }
-
-?>
