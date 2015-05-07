@@ -34,7 +34,7 @@ function simple_php_captcha($config = array()) {
         'fonts' => array(
             $font_path . 'times_new_yorker.ttf'
         ),
-        'characters' => 'ABCDEFGHJKLMNPRSTUVWXYZabcdefghjkmnprstuvwxyz23456789',
+        'characters' => 'ABCDEFGHJKLMNPRSTUVWXYZabcdefghjkmnprstuvwxyz0123456789',
         'min_font_size' => 28,
         'max_font_size' => 28,
         'color' => '#666',
@@ -43,7 +43,8 @@ function simple_php_captcha($config = array()) {
         'shadow' => true,
         'shadow_color' => '#fff',
         'shadow_offset_x' => -1,
-        'shadow_offset_y' => 1
+        'shadow_offset_y' => 1,
+        'numeric' => false
     );
 
     // Overwrite defaults with custom config values
@@ -58,6 +59,9 @@ function simple_php_captcha($config = array()) {
     if( $captcha_config['angle_max'] < $captcha_config['angle_min'] ) $captcha_config['angle_max'] = $captcha_config['angle_min'];
     if( $captcha_config['min_font_size'] < 10 ) $captcha_config['min_font_size'] = 10;
     if( $captcha_config['max_font_size'] < $captcha_config['min_font_size'] ) $captcha_config['max_font_size'] = $captcha_config['min_font_size'];
+
+    //Check for only numeric captcha
+    if( $captcha_config['numeric'] == true ) $captcha_config['characters'] = '0123456789';
 
     // Use milliseconds instead of seconds
     srand(microtime() * 100);
