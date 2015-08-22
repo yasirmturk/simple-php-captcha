@@ -69,8 +69,14 @@ function simple_php_captcha($config = array()) {
     }
 
     // Generate HTML for image src
-    $image_src = substr(__FILE__, strlen( realpath($_SERVER['DOCUMENT_ROOT']) )) . '?_CAPTCHA&amp;t=' . urlencode(microtime());
-    $image_src = '/' . ltrim(preg_replace('/\\\\/', '/', $image_src), '/');
+    if ( strpos($_SERVER['SCRIPT_FILENAME'], $_SERVER['DOCUMENT_ROOT']) ) {
+        $image_src = substr(__FILE__, strlen( realpath($_SERVER['DOCUMENT_ROOT']) )) . '?_CAPTCHA&amp;t=' . urlencode(microtime());
+        $image_src = '/' . ltrim(preg_replace('/\\\\/', '/', $image_src), '/');
+    } else {
+        $_SERVER['WEB_ROOT'] = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']);
+        $image_src = substr(__FILE__, strlen( realpath($_SERVER['WEB_ROOT']) )) . '?_CAPTCHA&amp;t=' . urlencode(microtime());
+        $image_src = '/' . ltrim(preg_replace('/\\\\/', '/', $image_src), '/');
+    }
 
     $_SESSION['_CAPTCHA']['config'] = serialize($captcha_config);
 
