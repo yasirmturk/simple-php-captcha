@@ -2,7 +2,7 @@
 //
 //  A simple PHP CAPTCHA script
 //
-//  Copyright 2013 by Cory LaViska for A Beautiful Site, LLC
+//  Copyright 2011 by Cory LaViska for A Beautiful Site, LLC
 //
 //  See readme.md for usage, demo, and licensing info
 //
