@@ -148,6 +148,11 @@ if( isset($_GET['_CAPTCHA']) ) {
     $text_pos_x = mt_rand($text_pos_x_min, $text_pos_x_max);
     $text_pos_y_min = $box_height;
     $text_pos_y_max = ($bg_height) - ($box_height / 2);
+    if ($text_pos_y_min > $text_pos_y_max) {
+        $temp_text_pos_y = $text_pos_y_min;
+        $text_pos_y_min = $text_pos_y_max;
+        $text_pos_y_max = $temp_text_pos_y;
+    }
     $text_pos_y = mt_rand($text_pos_y_min, $text_pos_y_max);
 
     // Draw shadow
