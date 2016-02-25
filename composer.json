@@ -1,0 +1,7 @@
+{
+    "name": "simple-php-captcha-master/captcha-master",
+    "description": "Provides a simple captcha validation",
+    "require": {
+        "php": ">=5.3.0",
+    }
+}
