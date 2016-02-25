@@ -1,6 +1,6 @@
 # A simple PHP CAPTCHA script
 
-_Copyright 2011 Cory LaViska for A Beautiful Site, LLC. (http://abeautifulsite.net/)_
+_Written by Cory LaViska for A Beautiful Site, LLC.  (http://abeautifulsite.net/)_
 
 _Licensed under the MIT license: http://opensource.org/licenses/MIT_
 
