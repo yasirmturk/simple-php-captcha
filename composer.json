@@ -3,5 +3,8 @@
     "description": "A simple PHP CAPTCHA script",
     "version": "1.0.0",
     "homepage": "http://www.abeautifulsite.net/",
-    "license": "MIT"
+    "license": "MIT",
+    "autoload": {
+        "files": ["simple-php-captcha.php"]
+    }
 }
