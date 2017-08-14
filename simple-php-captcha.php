@@ -111,9 +111,13 @@ if( !function_exists('hex2rgb') ) {
 // Draw the image
 if( isset($_GET['_CAPTCHA']) ) {
 
-    session_start();
+    //Make sure we don't start a session twice, generates a notice otherwise
+    if(session_status() === PHP_SESSION_NONE) {
+		session_start();
+	}
 
-    $captcha_config = unserialize($_SESSION['_CAPTCHA']['config']);
+    //Make sure the captcha configuration exists before attempting todeserialize
+    $captcha_config = isset($_SESSION['_CAPTCHA']['config']) ? unserialize($_SESSION['_CAPTCHA']['config']) : null;
     if( !$captcha_config ) exit();
 
     unset($_SESSION['_CAPTCHA']);
