@@ -116,7 +116,11 @@ if( isset($_GET['_CAPTCHA']) ) {
     $captcha_config = unserialize($_SESSION['_CAPTCHA']['config']);
     if( !$captcha_config ) exit();
 
-    unset($_SESSION['_CAPTCHA']);
+    if( isset($_GET['_RENDER']) ) {
+        $_SESSION['_CAPTCHA'] = simple_php_captcha();
+    } else {
+        unset($_SESSION['_CAPTCHA']);
+    }
 
     // Pick random background, get info, and start captcha
     $background = $captcha_config['backgrounds'][mt_rand(0, count($captcha_config['backgrounds']) -1)];
